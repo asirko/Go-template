@@ -12,7 +12,7 @@ L'architecture et les choix pris sont disponibles [ici](./docs/static/architectu
 ## Reste à faire
 
 - passer en UUID pour les users
-- mettre à jour le swagger et validé qu'il se génère seul
+- mettre à jour le swagger et validé qu'il se génère seul (voir go-redoc?)
 - mettre à jour le readme
 - utiliser une solution de DI (wire de google ?)
 - mettre un logger en place
@@ -23,6 +23,9 @@ L'architecture et les choix pris sont disponibles [ici](./docs/static/architectu
 - Utiliser gvm pour gérer les versions de go et simplifier les prérequis 
 - vérifier la génération automatique de la doc swagger et la documentation de la base de données
 - Mettre en place de la CI (voir golangci)
+- regrouper password utils et paseto dans un fichier utils
+- déplacer les utils dans un package utils
+- Pas besoin d'avoir 2 niveaux pour handler/http, garder uniquement http
 
 ## Démarrer
 
