@@ -6,10 +6,8 @@ import (
 	"os"
 
 	_ "github.com/asirko/go-template/docs"
-	handler "github.com/asirko/go-template/internal/adapter/handler/http"
 	repo "github.com/asirko/go-template/internal/adapter/repository/postgres"
 	token "github.com/asirko/go-template/internal/adapter/token/paseto"
-	"github.com/asirko/go-template/internal/core/service"
 	"github.com/joho/godotenv"
 )
 
@@ -84,22 +82,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Dependency injection
-	// User
-	userRepo := repo.NewUserRepository(db)
-	userService := service.NewUserService(userRepo)
-	userHandler := handler.NewUserHandler(userService)
-
-	// Auth
-	authService := service.NewAuthService(userRepo, tokenValue)
-	authHandler := handler.NewAuthHandler(authService)
-
-	// Init router
-	router, err := handler.NewRouter(
-		tokenValue,
-		*userHandler,
-		*authHandler,
-	)
+	router, err := InitializeEvent(tokenValue, db)
 	if err != nil {
 		slog.Error("Error initializing router", "error", err)
 		os.Exit(1)

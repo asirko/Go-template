@@ -24,8 +24,8 @@ type Router struct {
 // NewRouter creates a new HTTP router
 func NewRouter(
 	token port.TokenService,
-	userHandler UserHandler,
-	authHandler AuthHandler,
+	userHandler *UserHandler,
+	authHandler *AuthHandler,
 ) (*Router, error) {
 	// Disable debug mode and write logs to file in production
 	env := os.Getenv("APP_ENV")
