@@ -4,26 +4,20 @@
 package main
 
 import (
-	handler "github.com/asirko/go-template/internal/adapter/handler/http"
-	repo "github.com/asirko/go-template/internal/adapter/repository/postgres"
+	handler "github.com/asirko/go-template/internal/adapter/handler"
+	http "github.com/asirko/go-template/internal/adapter/handler/http"
+	repo "github.com/asirko/go-template/internal/adapter/repository"
+	db "github.com/asirko/go-template/internal/adapter/repository/postgres"
 	"github.com/asirko/go-template/internal/core/port"
 	"github.com/asirko/go-template/internal/core/service"
 	"github.com/google/wire"
 )
 
-func InitializeEvent(token port.TokenService, db *repo.DB) (*handler.Router, error) {
+func InitializeEvent(token port.TokenService, db *db.DB) (*http.Router, error) {
 	wire.Build(
-		repo.NewUserRepository,
-		wire.Bind(new(port.UserRepository), new(*repo.UserRepository)),
-
-		service.NewUserService,
-		wire.Bind(new(port.UserService), new(*service.UserService)),
-		service.NewAuthService,
-		wire.Bind(new(port.AuthService), new(*service.AuthService)),
-
-		handler.NewUserHandler,
-		handler.NewAuthHandler,
-		handler.NewRouter,
+		repo.Providers,
+		service.Providers,
+		handler.Providers,
 	)
-	return &handler.Router{}, nil
+	return &http.Router{}, nil
 }
